@@ -38,8 +38,6 @@ class _libc_adapter():
         self.connect = connect
 
     def string(self, str):
-        print ('about to create string')
-        print ([elem for elem in str])
         return create_string_buffer(str)
 
 class BluetoothSocket(socket.socket):
