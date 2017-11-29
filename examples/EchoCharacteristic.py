@@ -1,6 +1,8 @@
 from pybleno import Characteristic
 import array
 import struct
+import sys
+import traceback
 from builtins import str
 
 class EchoCharacteristic(Characteristic):
@@ -42,13 +44,13 @@ class EchoCharacteristic(Characteristic):
         self._updateValueCallback = None
         
         
-    def get_cellular_network(self):
-        print ("returning cell %d" % self._cell)
-        return "hello"#self._cell
+    def get_value(self):
+        print ("returning cell %d" % self._value)
+        return self._value
     
-    def set_cellular_network(self, value):
+    def set_value(self, value):
         print ("setting cell %d" % value)
-        self._cell = value
+        self._value = value
 
 class LambdaCharacteristic(Characteristic):
     def __init__(self, uuid, getter = None, setter = None, description = None):
@@ -84,7 +86,7 @@ class LambdaCharacteristic(Characteristic):
         result = 0
         
         try:
-            decoded_data = _unpack_U4LE(data)
+            decoded_data = self._unpack_U4LE(data)
             self.__setter(decoded_data)
         except ValueError:
             # no stack trace required
