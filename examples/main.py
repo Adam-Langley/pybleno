@@ -1,4 +1,4 @@
-from bleno import *
+from pybleno import *
 import sys
 import signal
 from EchoCharacteristic import *

@@ -1,4 +1,4 @@
-from bleno import Characteristic
+from pybleno import Characteristic
 import array
 import struct
 from builtins import str
