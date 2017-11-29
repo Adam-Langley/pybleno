@@ -89,7 +89,7 @@ class BluetoothHCISocketProvider:
 
 
         self._socket_poll_thread = threading.Thread(target=self._socket_poller, name='HCISocketPoller')
-        #self._socket_poll_thread.setDaemon(True)
+        self._socket_poll_thread.setDaemon(True)
         self._socket_poll_thread.start()
 
     def kernel_disconnect_workarounds(self, data):

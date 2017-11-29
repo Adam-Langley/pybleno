@@ -33,9 +33,9 @@ class Hci:
 
         self._socket.on_started(self.on_socket_started)
         
-        self._socket_up_poll_thread = threading.Thread(target=self._socket_up_poller, name='HCISocketUpPoller')
-        self._socket_up_poll_thread.setDaemon(True)
-        self._socket_up_poll_thread.start()
+        # self._socket_up_poll_thread = threading.Thread(target=self._socket_up_poller, name='HCISocketUpPoller')
+        # self._socket_up_poll_thread.setDaemon(True)
+        # self._socket_up_poll_thread.start()
         
         
         self._socket.start()
