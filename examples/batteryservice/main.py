@@ -1,11 +1,11 @@
 from pybleno import *
 import sys
 import signal
-from EchoCharacteristic import *
-
-print('bleno - echo');
+from batteryservice import *
 
 bleno = Bleno()
+
+primaryService = BatteryService();
 
 def onStateChange(state):
    print('on -> stateChange: ' + state);
