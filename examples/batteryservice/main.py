@@ -1,7 +1,7 @@
 from pybleno import *
 import sys
 import signal
-from batteryservice import *
+from BatteryService import *
 
 bleno = Bleno()
 
@@ -11,7 +11,7 @@ def onStateChange(state):
    print('on -> stateChange: ' + state);
 
    if (state == 'poweredOn'):
-     bleno.startAdvertising('echo', ['ec00'])
+       bleno.startAdvertising('Battery', [primaryService.uuid]);
    else:
      bleno.stopAdvertising();
 bleno.on('stateChange', onStateChange)
@@ -27,15 +27,12 @@ def onAdvertisingStart(error):
     print('on -> advertisingStart: ' + ('error ' + error if error else 'success'));
 
     if not error:
+        def on_setServiceError(error):
+            print('setServices: %s'  % ('error ' + error if error else 'success'))
+            
         bleno.setServices([
-            BlenoPrimaryService({
-                'uuid': 'ec00',
-                'characteristics': [ 
-                    EchoCharacteristic('ec0F'),
-                    LambdaCharacteristic('ec01', get_cellular_network, setter=set_cellular_network, description='Cellular Network')]
-                    
-            })
-        ])
+            primaryService
+        ], on_setServiceError)
 bleno.on('advertisingStart', onAdvertisingStart)
 
 print ('Hit <ENTER> to disconnect')
