@@ -42,12 +42,3 @@ class EchoCharacteristic(Characteristic):
         print('EchoCharacteristic - onUnsubscribe');
         
         self._updateValueCallback = None
-        
-        
-    def get_value(self):
-        print ("returning cell %d" % self._value)
-        return self._value
-    
-    def set_value(self, value):
-        print ("setting cell %d" % value)
-        self._value = value
