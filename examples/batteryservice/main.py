@@ -16,13 +16,6 @@ def onStateChange(state):
      bleno.stopAdvertising();
 bleno.on('stateChange', onStateChange)
 
-def get_cellular_network():
-    return "hello"
-
-def set_cellular_network(value):
-    print ("setting cell %d" % value)
-    
-    
 def onAdvertisingStart(error):
     print('on -> advertisingStart: ' + ('error ' + error if error else 'success'));
 
