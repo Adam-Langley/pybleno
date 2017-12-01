@@ -110,7 +110,7 @@ class Bleno:
     
     def setServices(self, services, callback=None):
         if callback:
-            self.once('servicesSet', callback)
+            self.once('servicesSet', [], callback)
         #print 'setting services %s' % services
         self._bindings.setServices(services)
 
@@ -128,7 +128,7 @@ class Bleno:
         
     def updateRssi(self, callback=None):
         if callback:
-            self.once('rssiUpdate', callback)
+            self.once('rssiUpdate', [], callback)
 
         self._bindings.updateRssi()
 

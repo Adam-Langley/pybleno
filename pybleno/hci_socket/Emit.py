@@ -15,7 +15,7 @@ def emit(self, event, arguments):
         handler(*arguments)        
         
 def once(self, event, arguments, handler):
-    def temporary_handler(self, arguments):
+    def temporary_handler(*arguments):
         self.off(event, temporary_handler)
         handler(*arguments)
         
