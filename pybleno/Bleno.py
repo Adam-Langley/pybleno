@@ -79,7 +79,7 @@ class Bleno:
             
         else:
             if (callback):
-                self.once('advertisingStart', callback)
+                self.once('advertisingStart', [], callback)
         
         
         undashedServiceUuids = []

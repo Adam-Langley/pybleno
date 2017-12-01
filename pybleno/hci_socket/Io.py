@@ -3,6 +3,9 @@ import struct
 def readUInt16LE(buffer, offset):
     return struct.unpack("<H", buffer[offset:offset+2])[0]
 
+def readUInt16BE(buffer, offset):
+    return struct.unpack(">H", buffer[offset:offset+2])[0]
+
 def readUInt8(buffer, offset):
     return buffer[offset]
     
