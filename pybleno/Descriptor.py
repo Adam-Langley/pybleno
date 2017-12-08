@@ -1,4 +1,4 @@
-import UuidUtil
+from . import UuidUtil
 
 # function Descriptor(options) {
 #   this.uuid = UuidUtil.removeDashes(options.uuid);
