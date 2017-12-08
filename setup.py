@@ -9,5 +9,9 @@ setup(
   url = 'https://github.com/Adam-Langley/pybleno', # use the URL to the github repo
   download_url = 'https://github.com/Adam-Langley/pybleno/archive/0.5.tar.gz', # I'll explain this in a second
   keywords = ['Bluetooth', 'Bluetooth Smart', 'BLE', 'Bluetooth Low Energy'], # arbitrary keywords
-  classifiers = [],
+  classifiers=[
+      'Programming Language :: Python :: 2.7',
+      'Programming Language :: Python :: 3.3',
+      'Programming Language :: Python :: 3.4',
+  ],
 )
