@@ -100,11 +100,11 @@ class Gap():
             copy(nameBuffer, scanData, 2)
     
         self.startAdvertisingWithEIRData(advertisementData, scanData)
-        
+
     def startAdvertisingIBeacon(self, data):
         #debug('startAdvertisingIBeacon: data = ' + data.toString('hex'))
         
-        dataLength = data.length
+        dataLength = len(data)
         manufacturerDataLength = 4 + dataLength
         advertisementDataLength = 5 + manufacturerDataLength
         scanDataLength = 0
@@ -126,7 +126,7 @@ class Gap():
         copy(data, advertisementData, 9)
         
         self.startAdvertisingWithEIRData(advertisementData, scanData)
-        
+
     def startAdvertisingWithEIRData(self, advertisementData, scanData):
         advertisementData = advertisementData or array.array('B', [0] * 0)
         scanData = scanData or array.array('B', [0] * 0)
