@@ -1,3 +1,4 @@
+import array
 import platform
 from . import UuidUtil
 from .hci_socket import Emit
@@ -90,7 +91,36 @@ class Bleno:
         
         #print 'starting advertising %s %s' % (name, undashedServiceUuids) 
         self._bindings.startAdvertising(name, undashedServiceUuids);
-        
+
+    def startAdvertisingIBeacon(self, uuid, major, minor, measuredPower, callback=None):
+        if (self.state != 'poweredOn'):
+            # var error = new Error('Could not start advertising, state is ' + self.state + ' (not poweredOn)');
+
+            # if (typeof callback === 'function')
+            callback(error);
+            # else
+            #    throw error;
+
+        else:
+            undashedUuid = UuidUtil.removeDashes(uuid)
+            uuidData = bytearray.fromhex(undashedUuid)
+            uuidDataLength = len(uuidData)
+            iBeaconData = array.array('B', [0] * (uuidDataLength + 5))
+
+            for i in range(0, uuidDataLength):
+                iBeaconData[i] = uuidData[i]
+
+            writeUInt16BE(iBeaconData, major, uuidDataLength)
+            writeUInt16BE(iBeaconData, minor, uuidDataLength + 2)
+            writeInt8(iBeaconData, measuredPower, uuidDataLength + 4)
+
+            if (callback):
+                self.once('advertisingStart', [], callback)
+
+            # debug('iBeacon data = ' + iBeaconData.toString('hex'));
+
+            self._bindings.startAdvertisingIBeacon(iBeaconData)
+
     def onAdvertisingStart(self, error):
         #debug('advertisingStart: ' + error);
         if error:
