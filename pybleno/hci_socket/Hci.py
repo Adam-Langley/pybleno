@@ -21,8 +21,6 @@ class Hci:
         self._state = None
         self._deviceId = None
         
-        self.inner = False
-        
         self._handleBuffers = {}
         
         self.on('stateChange', self.onStateChange)
@@ -330,9 +328,6 @@ class Hci:
         self._socket.write(pkt)
                                                                                                     
     def onSocketData(self, data):
-        if self.inner:
-            raise Exception('CURRENTLY READING!')
-        self.inner = True
         #print 'READING: %s' % ''.join(format(x, '02x') for x in data)
         # print 'got data!'
         # print [hex(c) for c in data]
@@ -422,20 +417,15 @@ class Hci:
                         'data': pktData
                     }
             elif ACL_CONT == flags:
-                if not self._handleBuffers[handle] or not self._handleBuffers[handle].data:
+                if not handle in self._handleBuffers or not 'data' in self._handleBuffers[handle]:
                     return
-                self._handleBuffers[handle].data = Buffer.concat([
-                    this._handleBuffers[handle].data,
-                    data.slice(5)
-                ])
+                self._handleBuffers[handle]['data'] = self._handleBuffers[handle]['data'] + data[5:]
             
-                if len(self._handleBuffers[handle].data) == len(self._handleBuffers[handle]):
-                    self.emit('aclDataPkt', [handle, self._handleBuffers[handle].cid, self._handleBuffers[handle].data])
+                if len(self._handleBuffers[handle]['data']) == self._handleBuffers[handle]['length']:
+                    self.emit('aclDataPkt', [handle, self._handleBuffers[handle]['cid'], self._handleBuffers[handle]['data']])
                     
-                    raise Exception('asdadasd')
-                    #delete self._handleBuffers[handle]
+                    del self._handleBuffers[handle]
             
-        self.inner = False
         #print 'READ: %s' % ''.join(format(x, '02x') for x in data)
 
     def onSocketError(self, error):

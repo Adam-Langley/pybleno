@@ -5,7 +5,7 @@ class AclStream:
     def __init__(self, hci, handle, localAddressType, localAddress, remoteAddressType, remoteAddress):
         self._hci = hci
         self._handle = handle
-        self.encypted = False
+        self.encrypted = False
         
         self._smp = Smp(self, localAddressType, localAddress, remoteAddressType, remoteAddress)
     
