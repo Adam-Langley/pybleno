@@ -9,6 +9,9 @@ Effort has been made to maintain the same code structure to aid in parallel main
 
 __Note:__ Currently only tested on Linux Raspbian
 
+## Prerequisites
+Please read the Bleno prerequisites, failure to meet these may result in 'Operation not permitted' errors at runtime.
+
 ## Install
 
 ```sh
