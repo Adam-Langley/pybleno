@@ -382,7 +382,7 @@ class Gatt:
                 numInfo+=1
     
             lengthPerInfo = 4 if (uuidSize == 2) else 18
-            maxInfo = floor((self._mtu - 2) / lengthPerInfo)
+            maxInfo = int(floor((self._mtu - 2) / lengthPerInfo))
             numInfo = min(numInfo, maxInfo)
     
             response = array.array('B', [0] * (2 + numInfo * lengthPerInfo))
@@ -439,7 +439,7 @@ class Gatt:
         if len(handles):
             lengthPerHandle = 4
             numHandles = len(handles)
-            maxHandles = floor((self._mtu - 1) / lengthPerHandle)
+            maxHandles = int(floor((self._mtu - 1) / lengthPerHandle))
     
             numHandles = min(numHandles, maxHandles)
     
@@ -492,7 +492,7 @@ class Gatt:
                     numServices+=1
     
                 lengthPerService = 6 if (uuidSize == 2) else 20
-                maxServices = floor((self._mtu - 2) / lengthPerService)
+                maxServices = int(floor((self._mtu - 2) / lengthPerService))
                 numServices = min(numServices, maxServices)
     
                 response = array.array('B', [0] * (2 + numServices * lengthPerService))
