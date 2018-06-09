@@ -30,7 +30,7 @@ class PizzaBakeCharacteristic(Characteristic):
         else:
             temperature = readUInt16BE(data, 0)
             def on_pizzaReady(result):
-                print 'pizza is ready!'
+                print ('pizza is ready!')
                 if self.updateValueCallback:
                     data = array.array('B', [0] * 1)
                     writeUInt8(data, result, 0);
