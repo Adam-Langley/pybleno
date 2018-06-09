@@ -1,5 +1,5 @@
 from pybleno.hci_socket import Emit
-import thread
+import _thread
 import time
 
 PizzaCrust = {

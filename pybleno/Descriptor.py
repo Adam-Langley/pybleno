@@ -9,7 +9,7 @@ import array
 class Descriptor:
     def __init__(self, uuid=None, value=None):
         self.uuid = uuid
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             self.value = array.array('B', [ord(c) for c in value])
         else:
             self.value = value
