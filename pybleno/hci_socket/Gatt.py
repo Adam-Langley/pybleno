@@ -260,7 +260,7 @@ class Gatt:
         self._aclStream.removeListener('end', self.onAclStreamEnd)
         
         for i in range(0, len(self._handles)):
-            if (self._handles[i] and self._handles[i].type == 'descriptor' and self._handles[i].uuid == '2902' and readUInt16LE(self._handles[i].value, 0) != 0):
+            if (i in self._handles and self._handles[i].type == 'descriptor' and self._handles[i].uuid == '2902' and readUInt16LE(self._handles[i].value, 0) != 0):
             
                 self._handles[i].value = array.array('B', [0x00, 0x00])
             
@@ -624,7 +624,7 @@ class Gatt:
     
                 callback = create_callback(valueHandle)
                 
-                data = self._handles[valueHandle]['value']
+                data = self._handles[valueHandle]['value'] if 'value' in self._handles[valueHandle] else None
     
                 if data:
                     callback(ATT_ECODE_SUCCESS, data)
@@ -644,7 +644,7 @@ class Gatt:
         valueHandle = readUInt16LE(request, 1)
         offset = readUInt16LE(request, 3) if (requestType == ATT_OP_READ_BLOB_REQ) else 0
     
-        handle = self._handles[valueHandle]
+        handle = self._handles[valueHandle] if valueHandle in self._handles else None
         i = None
     
         if handle:
@@ -743,7 +743,7 @@ class Gatt:
             if handle['type'] == 'characteristicValue':
                 handle = self._handles[valueHandle - 1]
     
-            handleProperties = handle['properties']
+            handleProperties = handle['properties'] if 'properties' in handle else None
             handleSecure = handle['secure']
     
             if handleProperties and ((handleProperties & 0x04) if withoutResponse else (handleProperties & 0x08)):
@@ -841,13 +841,13 @@ class Gatt:
         offset = readUInt16LE(request, 3)
         data = request[5:]
     
-        handle = self._handles[valueHandle]
+        handle = self._handles[valueHandle] if valueHandle in self._handles else None
     
         if handle:
             if handle['type'] == 'characteristicValue':
                 handle = self._handles[valueHandle - 1]
     
-                handleProperties = handle['properties']
+                handleProperties = handle['properties'] if 'properties' in handle else None
                 handleSecure = handle['secure']
     
                 if handleProperties and (handleProperties & 0x08):
