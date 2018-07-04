@@ -34,6 +34,8 @@ def number_setter(handler):
 def string_getter(handler):
     def encoded_handler():
         result = handler() or ''
+        if isinstance(result, unicode):
+            result = result.encode('utf8')        
         if result is not None and not isinstance(result, str):
             raise Exception("Unable to encode value as a string - type was [%s]" % type(result).__name__)
         encoded_result = array.array('B', [ord(c) for c in result])
