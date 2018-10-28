@@ -31,7 +31,7 @@ import select
 import os
 import sys
 
-from .BluetoothSocket import BluetoothSocket
+#from .BluetoothSocket import BluetoothSocket
 
 from .constants import *
 
@@ -57,10 +57,10 @@ class BluetoothHCISocketProvider:
         self._socket_poll_thread = None
         self._l2sockets = {}
 
-        self._socket = BluetoothSocket(socket.AF_BLUETOOTH, socket.SOCK_RAW, socket.BTPROTO_HCI)
+#        self._socket = BluetoothSocket(socket.AF_BLUETOOTH, socket.SOCK_RAW, socket.BTPROTO_HCI)
         
     
-        #self._socket = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_RAW, socket.BTPROTO_HCI)
+        self._socket = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_RAW, socket.BTPROTO_HCI)
         #self._socket = BluetoothUserSocket()
         #self._socket = bluetooth.bluez._gethcisock(0)
 
@@ -81,7 +81,8 @@ class BluetoothHCISocketProvider:
         
         HCI_CHANNEL_RAW = 0
         HCI_CHANNEL_USER = 1
-        self._socket.bind_hci(self.device_id, HCI_CHANNEL_RAW)
+        #self._socket.bind_hci(self.device_id, HCI_CHANNEL_RAW)
+        self._socket.bind((self.device_id,))
         #self._socket2.bind_l2(0, "0B:D8:28:EB:27:B8", cid=ATT_CID, addr_type=1)
         #self._socket2.connect_l2(0, "0B:D8:28:EB:27:B8", cid=ATT_CID, addr_type=1)
 
