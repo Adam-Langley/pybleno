@@ -121,6 +121,27 @@ class Bleno:
 
             self._bindings.startAdvertisingIBeacon(iBeaconData)
 
+    def startAdvertisingWithEIRData(self, advertisementData, scanData, callback=None):
+        #if (typeof scanData === 'function')
+        if hasattr(scanData, '__call__') is True:
+            callback = scanData
+            scanData = None
+
+        if (self.state != 'poweredOn'):
+            #var error = new Error('Could not advertising scanning, state is ' + self.state + ' (not poweredOn)');
+
+            #if (typeof callback === 'function')
+            callback(error);
+            #else
+            #    throw error;
+
+        else:
+            if (callback):
+                self.once('advertisingStart', [], callback)
+
+        #print 'starting advertising with EIR data %s %s' % (advertisementData, scanData)
+        self._bindings.startAdvertisingWithEIRData(advertisementData, scanData);
+
     def onAdvertisingStart(self, error):
         #debug('advertisingStart: ' + error);
         if error:
