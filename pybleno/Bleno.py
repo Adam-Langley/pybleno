@@ -37,8 +37,9 @@ class Bleno:
         
         self._bindings.on('rssiUpdate', self.onRssiUpdate);
         
+    def start(self):
         self._bindings.init()
-    
+
     def onPlatform(self, platform):
         self.platform = platform
         

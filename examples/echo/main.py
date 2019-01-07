@@ -14,6 +14,7 @@ def onStateChange(state):
      bleno.startAdvertising('echo', ['ec00'])
    else:
      bleno.stopAdvertising();
+
 bleno.on('stateChange', onStateChange)
     
 def onAdvertisingStart(error):
@@ -29,6 +30,8 @@ def onAdvertisingStart(error):
             })
         ])
 bleno.on('advertisingStart', onAdvertisingStart)
+
+bleno.start()
 
 print ('Hit <ENTER> to disconnect')
 
