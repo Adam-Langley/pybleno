@@ -30,6 +30,11 @@ See [examples folder](https://github.com/Adam-Langley/pybleno/blob/master/exampl
 
 See the original nodejs Bleno documentation for usage.
 
+## Troubleshooting
+ * Symptoms: Peripheral stops responding, notifications not going through - pi must be rebooted. Kernel log contains `hci0: Frame reassembly failed`
+   * Cause: Bugs in bluetooth kernel module - manifests whe running Raspbian <= 2008-11-13. 
+   * Fix: `apt-get upgrade`
+
 ## Licenses and Attribution
 
 ### Sandeep Mistry's Bleno
