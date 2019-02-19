@@ -56,8 +56,8 @@ class Characteristic(dict):
         self.updateValueCallback = updateValueCallback;
 
     def onUnsubscribe(self):
-        self.maxValueSize = null;
-        self.updateValueCallback = null;
+        self.maxValueSize = None;
+        self.updateValueCallback = None;
     
     def onNotify(self):
         pass
