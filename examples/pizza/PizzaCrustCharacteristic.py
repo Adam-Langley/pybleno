@@ -25,7 +25,7 @@ class PizzaCrustCharacteristic(Characteristic):
     def onReadRequest(self, offset, callback):
         
         if offset:
-            callback(Characteristic.RESULT_ATTR_NOT_LONG, null)
+            callback(Characteristic.RESULT_ATTR_NOT_LONG, None)
         else:
             data = array.array('B', [0] * 1)
             writeUInt8(data, self.pizza.crust, 0)

@@ -24,7 +24,7 @@ class PizzaToppingsCharacteristic(Characteristic):
     def onReadRequest(self, offset, callback):
         
         if offset:
-            callback(Characteristic.RESULT_ATTR_NOT_LONG, null)
+            callback(Characteristic.RESULT_ATTR_NOT_LONG, None)
         else:
             data = array.array('B', [0] * 2)
             writeUInt8(data, self.pizza.toppings, 0)
