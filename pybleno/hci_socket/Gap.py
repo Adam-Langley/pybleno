@@ -23,7 +23,7 @@ class Gap():
         self._hci.on('leAdvertiseEnableSet', self.onHciLeAdvertiseEnableSet)
 
     def startAdvertising(self, name, serviceUuids):
-        #debug('startAdvertising: name = ' + name + ', serviceUuids = ' + JSON.stringify(serviceUuids, None, 2))
+        #debug('startAdvertising: name = ' + name + ', serviceUuids = ' + JSON.stringify(serviceUuids, null, 2))
     
         advertisementDataLength = 3
         scanDataLength = 0
