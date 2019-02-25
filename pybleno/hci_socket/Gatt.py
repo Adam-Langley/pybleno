@@ -859,7 +859,7 @@ class Gatt:
                         elif offset == (self._preparedWriteRequest.offset + len(self._preparedWriteRequest.data)):
                             self._preparedWriteRequest.data = self._preparedWriteRequest.data + data
     
-                            response = array.array('B', [0] * len(request.length))
+                            response = array.array('B', [0] * len(request))
                             copy(request, response)
                             response[0] = ATT_OP_PREP_WRITE_RESP
                         else:
@@ -872,7 +872,7 @@ class Gatt:
                             'data': data
                         }
     
-                        response = array.array('B', [0] * len(request.length))
+                        response = array.array('B', [0] * len(request))
                         copy(request, response)
                         response[0] = ATT_OP_PREP_WRITE_RESP
                 else:
