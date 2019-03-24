@@ -305,7 +305,7 @@ class Gatt:
             response = self.handlePrepareWriteRequest(request)
         elif requestType == ATT_OP_EXEC_WRITE_REQ:
             response = self.handleExecuteWriteRequest(request)
-        elif requestType == ATT_OP_EXEC_WRITE_REQ:
+        elif requestType == ATT_OP_HANDLE_CNF:
             response = self.handleConfirmation(request)
         else:
             # case ATT_OP_READ_MULTI_REQ:
