@@ -687,7 +687,7 @@ class Gatt:
                 writeUInt8(data, handle['properties'], 0)
                 writeUInt16LE(data, handle['valueHandle'], 1)
     
-                for i in range(0, len(uuid.length)):
+                for i in range(0, len(uuid)):
                     data[i + 3] = uuid[i]
             elif handleType == 'characteristicValue' or handleType == 'descriptor':
                 handleProperties = handle['properties'] if 'properties' in handle else None
