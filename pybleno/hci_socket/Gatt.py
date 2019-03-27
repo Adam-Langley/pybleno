@@ -687,7 +687,7 @@ class Gatt:
                 writeUInt8(data, handle['properties'], 0)
                 writeUInt16LE(data, handle['valueHandle'], 1)
     
-                for i in range(0, len(uuid.length)):
+                for i in range(0, len(uuid)):
                     data[i + 3] = uuid[i]
             elif handleType == 'characteristicValue' or handleType == 'descriptor':
                 handleProperties = handle['properties'] if 'properties' in handle else None
@@ -859,7 +859,7 @@ class Gatt:
                         elif offset == (self._preparedWriteRequest.offset + len(self._preparedWriteRequest.data)):
                             self._preparedWriteRequest.data = self._preparedWriteRequest.data + data
     
-                            response = array.array('B', [0] * len(request.length))
+                            response = array.array('B', [0] * len(request))
                             copy(request, response)
                             response[0] = ATT_OP_PREP_WRITE_RESP
                         else:
@@ -872,7 +872,7 @@ class Gatt:
                             'data': data
                         }
     
-                        response = array.array('B', [0] * len(request.length))
+                        response = array.array('B', [0] * len(request))
                         copy(request, response)
                         response[0] = ATT_OP_PREP_WRITE_RESP
                 else:
