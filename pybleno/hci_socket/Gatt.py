@@ -911,7 +911,6 @@ class Gatt:
                     return callback
                 callback = create_callback(requestType, self._preparedWriteRequest['valueHandle'])
     
-                print(type(self._preparedWriteRequest['handle']['attribute']))
                 self._preparedWriteRequest['handle']['attribute'].emit('writeRequest', [self._preparedWriteRequest['data'], self._preparedWriteRequest['offset'], False, callback])
             else:
                 response = self.errorResponse(requestType, 0x0000, ATT_ECODE_UNLIKELY)
