@@ -860,7 +860,7 @@ class Gatt:
                             self._preparedWriteRequest.data = self._preparedWriteRequest.data + data
     
                             response = array.array('B', [0] * len(request))
-                            copy(request, response)
+                            copy(request, response, 0)
                             response[0] = ATT_OP_PREP_WRITE_RESP
                         else:
                             response = self.errorResponse(requestType, valueHandle, ATT_ECODE_INVALID_OFFSET)
@@ -873,7 +873,7 @@ class Gatt:
                         }
     
                         response = array.array('B', [0] * len(request))
-                        copy(request, response)
+                        copy(request, response, 0)
                         response[0] = ATT_OP_PREP_WRITE_RESP
                 else:
                     response = self.errorResponse(requestType, valueHandle, ATT_ECODE_WRITE_NOT_PERM)
