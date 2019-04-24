@@ -19,7 +19,7 @@ class EchoCharacteristic(Characteristic):
           
     def onReadRequest(self, offset, callback):
         print('EchoCharacteristic - %s - onReadRequest: value = %s' % (self['uuid'], [hex(c) for c in self._value]))
-        callback(Characteristic.RESULT_SUCCESS, self._value)
+        callback(Characteristic.RESULT_SUCCESS, self._value[offset:])
 
     def onWriteRequest(self, data, offset, withoutResponse, callback):
         self._value = data
