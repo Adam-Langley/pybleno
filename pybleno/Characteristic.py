@@ -9,12 +9,18 @@ class Characteristic(dict):
     RESULT_UNLIKELY_ERROR           = 0x0e;
     
     def __init__(self, options = {}):
+    def __init__(self, options=None):
+        super().__init__()
+        if options is None:
+            options = {}
         self['uuid'] = UuidUtil.removeDashes(options['uuid'])
         self['properties'] = options['properties'] if 'properties' in options else []
         self['secure'] = options['secure'] if 'secure' in options else []
         self['value'] = options['value'] if 'value' in options else None
         self['descriptors'] = options['descriptors'] if 'descriptors' in options else []
         
+        self.maxValueSize = None
+        self.updateValueCallback = None
         if self['value'] and (len(self['properties']) != 1 or self['properties'][0] != 'read'):
             raise Exception('Characteristics with value can be read only!')
         
