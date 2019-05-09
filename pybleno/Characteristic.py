@@ -109,7 +109,7 @@ class Characteristic(dict):
         return self.__dict__.pop(*args)
 
     def __cmp__(self, dict_):
-        return self.__cmp__(self.__dict__, dict_)
+        return self.__dict__.__cmp__(dict_)
 
     def __contains__(self, item):
         return item in self.__dict__
