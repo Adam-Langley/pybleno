@@ -50,12 +50,10 @@ class Characteristic(dict):
         self.on('indicate', self.onIndicate)
   
     def onReadRequest(self, offset, callback):
-        callback(RESULT_UNLIKELY_ERROR, None);
-        pass
+        callback(self.RESULT_UNLIKELY_ERROR, None)
 
     def onWriteRequest(self, data, offset, withoutResponse, callback):
-        callback(RESULT_UNLIKELY_ERROR);
-        pass
+        callback(self.RESULT_UNLIKELY_ERROR)
 
     def onSubscribe(self, maxValueSize, updateValueCallback):
         self.maxValueSize = maxValueSize;
