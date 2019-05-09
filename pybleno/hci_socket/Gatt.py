@@ -854,13 +854,13 @@ class Gatt:
                     if (handleSecure & 0x08) and not self._aclStream.encrypted:
                         response = self.errorResponse(requestType, valueHandle, ATT_ECODE_AUTHENTICATION)
                     elif self._preparedWriteRequest:
-                        if self._preparedWriteRequest.handle != handle:
+                        if self._preparedWriteRequest['handle'] != handle:
                             response = self.errorResponse(requestType, valueHandle, ATT_ECODE_UNLIKELY)
-                        elif offset == (self._preparedWriteRequest.offset + len(self._preparedWriteRequest.data)):
-                            self._preparedWriteRequest.data = self._preparedWriteRequest.data + data
+                        elif offset == (self._preparedWriteRequest['offset'] + len(self._preparedWriteRequest['data'])):
+                            self._preparedWriteRequest['data'] = self._preparedWriteRequest['data'] + data
     
                             response = array.array('B', [0] * len(request))
-                            copy(request, response)
+                            copy(request, response, 0)
                             response[0] = ATT_OP_PREP_WRITE_RESP
                         else:
                             response = self.errorResponse(requestType, valueHandle, ATT_ECODE_INVALID_OFFSET)
@@ -873,7 +873,7 @@ class Gatt:
                         }
     
                         response = array.array('B', [0] * len(request))
-                        copy(request, response)
+                        copy(request, response, 0)
                         response[0] = ATT_OP_PREP_WRITE_RESP
                 else:
                     response = self.errorResponse(requestType, valueHandle, ATT_ECODE_WRITE_NOT_PERM)
@@ -891,7 +891,7 @@ class Gatt:
         flag = request[1]
     
         if self._preparedWriteRequest:
-            valueHandle = self._preparedWriteRequest.valueHandle
+            valueHandle = self._preparedWriteRequest['valueHandle']
     
             if flag == 0x00:
                 response = array.array('B', [ATT_OP_EXEC_WRITE_RESP])
@@ -908,9 +908,10 @@ class Gatt:
                         # debug('execute write response: ' + callbackResponse.toString('hex'))
     
                         self.send(callbackResponse)
-                callback = create_callback(requestType, self._preparedWriteRequest.valueHandle)
+                    return callback
+                callback = create_callback(requestType, self._preparedWriteRequest['valueHandle'])
     
-                self._preparedWriteRequest.handle['attribute'].emit('writeRequest', self._preparedWriteRequest.data, self._preparedWriteRequest.offset, False, callback)
+                self._preparedWriteRequest['handle']['attribute'].emit('writeRequest', [self._preparedWriteRequest['data'], self._preparedWriteRequest['offset'], False, callback])
             else:
                 response = self.errorResponse(requestType, 0x0000, ATT_ECODE_UNLIKELY)
     
