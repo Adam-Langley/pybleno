@@ -1,2 +1,2 @@
 def removeDashes(uuid):
-    return uuid
+    return uuid.replace('-', '')
