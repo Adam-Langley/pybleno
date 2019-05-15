@@ -150,7 +150,7 @@ class Bleno:
 
     def stopAdvertising(self, callback=None):
         if callback:
-            self.once('advertisingStop', [callback])
+            self.once('advertisingStop', [], callback)
 
         self._bindings.stopAdvertising()
 
