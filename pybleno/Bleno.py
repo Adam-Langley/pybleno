@@ -97,7 +97,7 @@ class Bleno:
 
         if service_uuids is None:
             service_uuids = []
-        undashedServiceUuids = map(UuidUtil.removeDashes, service_uuids)
+        undashedServiceUuids = list(map(UuidUtil.removeDashes, service_uuids))
 
         # print 'starting advertising %s %s' % (name, undashedServiceUuids)
         self._bindings.startAdvertising(name, undashedServiceUuids)
