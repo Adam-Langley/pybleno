@@ -74,7 +74,8 @@ class Bleno:
             # var error = new Error('Could not start advertising, state is ' + self.state + ' (not poweredOn)');
 
             # if (typeof callback === 'function')
-            callback(error);
+            #callback(error)
+            callback(None)
             # else
             #    throw error;
 
@@ -96,7 +97,8 @@ class Bleno:
             # var error = new Error('Could not start advertising, state is ' + self.state + ' (not poweredOn)');
 
             # if (typeof callback === 'function')
-            callback(error);
+            #callback(error)
+            callback(None)
             # else
             #    throw error;
 
@@ -130,7 +132,8 @@ class Bleno:
             # var error = new Error('Could not advertising scanning, state is ' + self.state + ' (not poweredOn)');
 
             # if (typeof callback === 'function')
-            callback(error);
+            #callback(error)
+            callback(None)
             # else
             #    throw error;
 
