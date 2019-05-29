@@ -65,7 +65,7 @@ ATT_CID = 0x0004
 
 class Gatt:
     def __init__(self):
-        self.maxMtu = 256
+        self.maxMtu = 512
         self._mtu = 23
         self._preparedWriteRequest = None
         self._aclStream = None
