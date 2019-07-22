@@ -10,7 +10,7 @@ class Characteristic(dict):
     RESULT_UNLIKELY_ERROR = 0x0e
 
     def __init__(self, options=None):
-        super().__init__()
+        super(Characteristic, self).__init__()
         if options is None:
             options = {}
         self['uuid'] = UuidUtil.removeDashes(options['uuid'])

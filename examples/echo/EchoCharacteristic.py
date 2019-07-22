@@ -3,7 +3,6 @@ import array
 import struct
 import sys
 import traceback
-from builtins import str
 
 class EchoCharacteristic(Characteristic):
     

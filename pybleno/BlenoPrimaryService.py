@@ -5,7 +5,7 @@ from .hci_socket import Emit
 
 class BlenoPrimaryService(dict):
     def __init__(self, options):
-        super().__init__()
+        super(BlenoPrimaryService, self).__init__()
         self['uuid'] = UuidUtil.removeDashes(options['uuid'])
         self['characteristics'] = options['characteristics'] if 'characteristics' in options else []
 
