@@ -36,7 +36,8 @@ See the original nodejs Bleno documentation for usage.
 
 If you don't have Pybleno 'installed' - then from within the pybleno folder:
 
-```> sudo python3 -m bleno.examples.echo.main
+```
+sudo python3 -m bleno.examples.echo.main
 ```
 
 ## Troubleshooting
