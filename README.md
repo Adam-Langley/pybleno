@@ -49,12 +49,10 @@ sudo python3 -m bleno.examples.echo.main
 
 1. Mirror the following attributes of the origin code
    - file/folder structure and naming
-   - order
-   - formatting
+   - formatting/ordering/whitespace
    - naming conventions
    - inline comments
-   - whitespace
-   - usage
+   - API usage
 2. Utilise first class pythonic features without compromising on 'mirroring' goals
     - where language deviates too much, supplement capabilities through supporting modules
 3. Maintability over runtime optimization
