@@ -45,6 +45,25 @@ sudo python3 -m bleno.examples.echo.main
    * Cause: Bugs in bluetooth kernel module - manifests whe running Raspbian <= 2018-11-13. 
    * Fix: `apt-get upgrade`
 
+## Coding Conventions
+
+Files/Folders:
+
+bleno/supporting/ : location of all supplemental files, which allow the transpiled code to parallel the node source as reasonably as possible.
+_file.py : underscored filenames denote a hand-crafted file, vs a transpiled output.
+
+Import/Require:
+TODO: Explain differences here
+
+Expanding Lists and KV objects
+
+For Loops:
+Python doesnt support `for` loop expressions, these are approximated through unbounded whiles, with a terminator case.
+
+Switch Cases:
+Python doesn't support switch expressions, these are approximated with a helper function. Fallthrough is calculated by the transpiler, and achieved by multi-conditional comparison.
+
+
 ## Licenses and Attribution
 
 ### Sandeep Mistry's Bleno
