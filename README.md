@@ -45,6 +45,20 @@ sudo python3 -m bleno.examples.echo.main
    * Cause: Bugs in bluetooth kernel module - manifests whe running Raspbian <= 2018-11-13. 
    * Fix: `apt-get upgrade`
 
+## Transpiler Goals
+
+1. Mirror the following attributes of the origin code
+    a. file/folder structure and naming
+		b. order
+		c. formatting
+		d. naming conventions
+		e. inline comments
+		f. whitespace
+		g. usage
+2. Utilise first class pythonic features where it does not heavily compromise on mirroring goals
+    - where language deviates too much, supplement capabilities through supporting modules
+3. Maintability over runtime optimization
+
 ## Coding Conventions
 
 Files/Folders:
