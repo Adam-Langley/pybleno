@@ -55,7 +55,12 @@ _file.py : underscored filenames denote a hand-crafted file, vs a transpiled out
 Import/Require:
 TODO: Explain differences here
 
-Expanding Lists and KV objects
+Expanding Lists and KV objects:
+
+Resilience to Superfluous Function Arguments:
+*varargs
+
+Default Args:
 
 For Loops:
 Python doesnt support `for` loop expressions, these are approximated through unbounded whiles, with a terminator case.
