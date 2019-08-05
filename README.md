@@ -23,7 +23,7 @@ pip install pybleno
 ## Usage
 
 ```python
-from pybleno import *
+from bleno import bleno # or the Node way: bleno = require(__file__, '../..')
 
 bleno.on('advertisingStart', _temp2)
 
