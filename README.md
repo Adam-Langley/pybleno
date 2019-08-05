@@ -25,7 +25,17 @@ pip install pybleno
 ```python
 from pybleno import *
 
-bleno = Bleno()
+bleno.on('advertisingStart', _temp2)
+
+print ('Hit <ENTER> to disconnect')
+
+if (sys.version_info > (3, 0)):
+    input()
+else:
+    raw_input()
+
+bleno.stopAdvertising()
+bleno.disconnect()
 ```
 
 See [examples folder](https://github.com/Adam-Langley/pybleno/blob/master/bleno/examples) for code examples.
