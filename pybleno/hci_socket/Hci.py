@@ -472,6 +472,7 @@ class Hci:
         elif cmd == READ_BD_ADDR_CMD:
             self.addressType = 'public'
             # self.address = hex(result).match(/.{1,2}/g).reverse().join(':')
+            result.reverse()
             self.address = "%02x:%02x:%02x:%02x:%02x:%02x" % struct.unpack("BBBBBB", result)
             # debug('address = ' + this.address)
 

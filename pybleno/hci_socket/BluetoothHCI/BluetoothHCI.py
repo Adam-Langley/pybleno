@@ -58,8 +58,6 @@ class BluetoothHCISocketProvider:
         self._l2sockets = {}
 
         self._socket = BluetoothSocket(socket.AF_BLUETOOTH, socket.SOCK_RAW, socket.BTPROTO_HCI)
-        
-    
         #self._socket = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_RAW, socket.BTPROTO_HCI)
         #self._socket = BluetoothUserSocket()
         #self._socket = bluetooth.bluez._gethcisock(0)
@@ -73,7 +71,7 @@ class BluetoothHCISocketProvider:
         self._keep_running = False
 
 
-    def open(self):
+    def open(self, channel=0):
 
         # TODO: specify channel: HCI_CHANNEL_RAW, HCI_CHANNEL_USER, HCI_CHANNEL_CONTROL
         # https://www.spinics.net/lists/linux-bluetooth/msg37345.html
@@ -81,7 +79,7 @@ class BluetoothHCISocketProvider:
         
         HCI_CHANNEL_RAW = 0
         HCI_CHANNEL_USER = 1
-        self._socket.bind_hci(self.device_id, HCI_CHANNEL_RAW)
+        self._socket.bind_hci(self.device_id, channel)
         #self._socket2.bind_l2(0, "0B:D8:28:EB:27:B8", cid=ATT_CID, addr_type=1)
         #self._socket2.connect_l2(0, "0B:D8:28:EB:27:B8", cid=ATT_CID, addr_type=1)
 
@@ -320,4 +318,3 @@ class BluetoothHCI:
         return dict(id=device_id,
                     name=device_name,
                     addr=bd_addr)
-
