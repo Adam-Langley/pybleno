@@ -1,6 +1,8 @@
 from . import Emit
 import array
 from .Io import *
+from .Mgmt import *
+from . import Crypto as crypto
 
 SMP_CID = 0x0006
 
@@ -14,6 +16,7 @@ SMP_MASTER_IDENT = 0x07
 
 SMP_UNSPECIFIED = 0x08
 
+mgmt = Mgmt()
 
 class Smp:
     def __init__(self, aclStream, localAddressType, localAddress, remoteAddressType, remoteAddress):
@@ -22,11 +25,13 @@ class Smp:
         self._iat = array.array('B', [0x01 if (remoteAddressType == 'random') else 0x00])
         remoteAddressBytes = bytearray.fromhex(remoteAddress.replace(':', ''))
         remoteAddressBytes.reverse()
-        self._ia = array.array('B', remoteAddressBytes)  # todo - this is wrong
+        self._ia = array.array('B', remoteAddressBytes)
+
         self._rat = array.array('B', [0x01 if (localAddressType == 'random') else 0x00])
         localAddressBytes = bytearray.fromhex(localAddress.replace(':', ''))
-        # localAddressBytes.reverse() # for some reaon this array is already correctly reversed???
+        localAddressBytes.reverse()
         self._ra = array.array('B', localAddressBytes)
+
         self._stk = None
         self._random = None
         self._diversifier = None
@@ -54,23 +59,11 @@ class Smp:
     def onAclStreamEncryptChange(self, encrypted):
         if encrypted:
             if self._stk and self._diversifier and self._random:
-                self.write(Buffer.concat([
-                    array.array('B', [SMP_ENCRYPT_INFO]),
-                    self._stk
-                ]))
-
-                self.write(Buffer.concat([
-                    array.array('B', [SMP_MASTER_IDENT]),
-                    self._diversifier,
-                    self._random
-                ]))
+                self.write(array.array('B', [SMP_ENCRYPT_INFO]) + self._stk)
+                self.write(array.array('B', [SMP_MASTER_IDENT]) + self._diversifier + self._random)
 
     def onAclStreamLtkNegReply(self):
-        self.write(array.array('B', [
-            SMP_PAIRING_FAILED,
-            SMP_UNSPECIFIED
-        ]))
-
+        self.write(array.array('B', [SMP_PAIRING_FAILED, SMP_UNSPECIFIED]))
         self.emit('fail', [])
 
     def onAclStreamEnd(self):
@@ -80,7 +73,7 @@ class Smp:
         self._aclStream.off('end', self.onAclStreamEnd)
 
     def handlePairingRequest(self, data):
-        self._preq = data
+        self._preq = array.array('B', data)
 
         self._pres = array.array('B', [
             SMP_PAIRING_RESPONSE,
@@ -89,48 +82,32 @@ class Smp:
             0x01,  # Authentication requirement: Bonding - No MITM
             0x10,  # Max encryption key size
             0x00,  # Initiator key distribution: <none>
-            0x01  # Responder key distribution: EncKey
+            0x01   # Responder key distribution: EncKey
         ])
 
         self.write(self._pres)
 
     def handlePairingConfirm(self, data):
-        self._pcnf = data
-
+        self._pcnf = array.array('B', data)
         self._tk = array.array('B', [0] * 16)
-        self._r = crypto.r()
+        self._r = array.array('B', crypto.r())
 
-        # TODO: port this...
-        # self.write(Buffer.concat([
-        # new Buffer([SMP_PAIRING_CONFIRM]),
-        #     crypto.c1(self._tk, self._r, self._pres, self._preq, self._iat, self._ia, self._rat, self._ra)
-        # ]))
+        self.write(array.array('B', [SMP_PAIRING_CONFIRM]) + crypto.c1(self._tk, self._r, self._pres, self._preq, self._iat, self._ia, self._rat, self._ra))
 
     def handlePairingRandom(self, data):
-        r = data[1:]
+        r = array.array('B', data[1:])
 
-        pcnf = Buffer.concat([
-            array.array('B', [SMP_PAIRING_CONFIRM]),
-            crypto.c1(self._tk, r, self._pres, self._preq, self._iat, self._ia, self._rat, self._ra)
-        ])
+        pcnf = array.array('B', [SMP_PAIRING_CONFIRM]) + crypto.c1(self._tk, r, self._pres, self._preq, self._iat, self._ia, self._rat, self._ra)
 
-        if self._pcnf.toString('hex') == pcnf.toString('hex'):
+        if self._pcnf == pcnf:
             self._diversifier = array.array('B', [0] * 2)
             self._random = array.array('B', [0] * 8)
             self._stk = crypto.s1(self._tk, self._r, r)
 
-            mgmt.addLongTermKey(self._ia, self._iat, 0, 0, self._diversifier, self._random, self._stk)
-
-            self.write(Buffer.concat([
-                array.array('B', [SMP_PAIRING_RANDOM]),
-                self._r
-            ]))
+            mgmt.addLongTermKey(self._ia[::-1], self._iat, 0, 0, self._diversifier, self._random, self._stk)
+            self.write(array.array('B', [SMP_PAIRING_RANDOM]) + self._r)
         else:
-            self.write(array.array('B', [
-                SMP_PAIRING_FAILED,
-                SMP_PAIRING_CONFIRM
-            ]))
-
+            self.write(array.array('B', [SMP_PAIRING_FAILED, SMP_UNSPECIFIED]))
             self.emit('fail', [])
 
     def handlePairingFailed(self, data):
