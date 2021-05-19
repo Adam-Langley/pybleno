@@ -16,11 +16,14 @@ class Hci:
 
     def __init__(self):
         self._events = {}
+        try:
+            self._deviceId = int(os.getenv('BLENO_HCI_DEVICE_ID', '0'))
+        except ValueError:
+            self._deviceId = 0
 
-        self._socket = BluetoothHCI(auto_start=False)
+        self._socket = BluetoothHCI(auto_start=False, device_id=self._deviceId)
         self._isDevUp = None
         self._state = None
-        self._deviceId = None
 
         self._handleBuffers = {}
 
