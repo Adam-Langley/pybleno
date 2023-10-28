@@ -66,7 +66,7 @@ class BluetoothHCISocketProvider:
 
         self._socket.setblocking(0)
         self.__r, self.__w = os.pipe()
-        self._r = os.fdopen(self.__r, 'rU')
+        self._r = os.fdopen(self.__r, 'r')
         self._w = os.fdopen(self.__w, 'w')
 
     def __del__(self):
